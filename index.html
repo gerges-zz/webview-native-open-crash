@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Window Open Weirdness</title>
+</head>
+
+<body>
+    <webview id="webview"src="https://www.google.com" allowpopups webpreferences="nativeWindowOpen=yes"></webview>
+    <button id="button">call window.open</button>
+    <div id="console"></div>
+</body>
+<script>
+    const webview = document.getElementById('webview'),
+    	button = document.getElementById('button'),
+    	console = document.getElementById('console');
+
+    webview.addEventListener('new-window', function (e, url, frameName, disposition, options, additionalFeatures) {
+    	e.preventDefault();
+    	console.innerHTML = console.innerHTML + "default prevented: " + e.defaultPrevented + "\n";
+    });
+
+    button.addEventListener("click", function(){
+    	webview.executeJavaScript("window.open('https://bitbucket.org/account/signin/')");
+	});
+
+</script>
+</html>
